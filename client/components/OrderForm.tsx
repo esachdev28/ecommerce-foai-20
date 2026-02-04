@@ -33,7 +33,7 @@ export default function OrderForm({
   const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -79,7 +79,9 @@ export default function OrderForm({
           >
             {/* Header */}
             <div className="sticky top-0 bg-white border-b border-border p-6 flex justify-between items-center">
-              <h2 className="text-2xl font-bold text-foreground">Place Order</h2>
+              <h2 className="text-2xl font-bold text-foreground">
+                Place Order
+              </h2>
               <button
                 onClick={onClose}
                 className="p-2 hover:bg-muted rounded-lg transition-colors duration-300"

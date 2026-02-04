@@ -26,22 +26,34 @@ export default function Footer() {
             <h4 className="font-bold mb-4 text-lg">Quick Links</h4>
             <ul className="space-y-2 text-white/80 text-sm">
               <li>
-                <a href="#" className="hover:text-white transition-colors duration-300">
+                <a
+                  href="#"
+                  className="hover:text-white transition-colors duration-300"
+                >
                   Home
                 </a>
               </li>
               <li>
-                <a href="#shop" className="hover:text-white transition-colors duration-300">
+                <a
+                  href="#shop"
+                  className="hover:text-white transition-colors duration-300"
+                >
                   Shop
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors duration-300">
+                <a
+                  href="#"
+                  className="hover:text-white transition-colors duration-300"
+                >
                   About Us
                 </a>
               </li>
               <li>
-                <a href="#contact" className="hover:text-white transition-colors duration-300">
+                <a
+                  href="#contact"
+                  className="hover:text-white transition-colors duration-300"
+                >
                   Contact
                 </a>
               </li>
@@ -53,22 +65,34 @@ export default function Footer() {
             <h4 className="font-bold mb-4 text-lg">Policies</h4>
             <ul className="space-y-2 text-white/80 text-sm">
               <li>
-                <a href="#" className="hover:text-white transition-colors duration-300">
+                <a
+                  href="#"
+                  className="hover:text-white transition-colors duration-300"
+                >
                   Privacy Policy
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors duration-300">
+                <a
+                  href="#"
+                  className="hover:text-white transition-colors duration-300"
+                >
                   Terms of Service
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors duration-300">
+                <a
+                  href="#"
+                  className="hover:text-white transition-colors duration-300"
+                >
                   Shipping Info
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-white transition-colors duration-300">
+                <a
+                  href="#"
+                  className="hover:text-white transition-colors duration-300"
+                >
                   Returns
                 </a>
               </li>
@@ -123,8 +147,8 @@ export default function Footer() {
           {/* Copyright */}
           <div className="text-center text-white/60 text-sm">
             <p>
-              © {currentYear} CollegeGear. All rights reserved. Made with ❤️ for
-              college students.
+              © {currentYear} CollegeGear. All rights reserved. Made with ❤️
+              for college students.
             </p>
           </div>
         </div>

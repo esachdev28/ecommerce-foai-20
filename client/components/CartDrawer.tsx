@@ -24,7 +24,10 @@ export default function CartDrawer({
   onRemoveItem,
   onProceed,
 }: CartDrawerProps) {
-  const subtotal = items.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const subtotal = items.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0,
+  );
   const tax = Math.round(subtotal * 0.1); // 10% tax
   const total = subtotal + tax;
 
@@ -110,7 +113,10 @@ export default function CartDrawer({
                       <div className="flex items-center border border-border rounded bg-muted">
                         <button
                           onClick={() =>
-                            onUpdateQuantity(item.id, Math.max(1, item.quantity - 1))
+                            onUpdateQuantity(
+                              item.id,
+                              Math.max(1, item.quantity - 1),
+                            )
                           }
                           className="p-1 hover:bg-white transition-colors duration-300"
                         >
@@ -145,7 +151,9 @@ export default function CartDrawer({
                 </div>
                 <div className="flex justify-between text-lg border-t border-border pt-3">
                   <span className="font-bold text-foreground">Total</span>
-                  <span className="font-bold text-primary text-xl">₹{total}</span>
+                  <span className="font-bold text-primary text-xl">
+                    ₹{total}
+                  </span>
                 </div>
               </div>
 

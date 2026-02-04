@@ -25,14 +25,15 @@ export default function Index() {
 
     setCartItems((prev) => {
       const existing = prev.find(
-        (item) => item.id === product.id && item.size === "M" && item.color === "Black"
+        (item) =>
+          item.id === product.id && item.size === "M" && item.color === "Black",
       );
 
       if (existing) {
         return prev.map((item) =>
           item.id === product.id && item.size === "M" && item.color === "Black"
             ? { ...item, quantity: item.quantity + quantity }
-            : item
+            : item,
         );
       }
 
@@ -49,8 +50,8 @@ export default function Index() {
     } else {
       setCartItems((prev) =>
         prev.map((item) =>
-          item.id === productId ? { ...item, quantity } : item
-        )
+          item.id === productId ? { ...item, quantity } : item,
+        ),
       );
     }
   };
@@ -69,12 +70,12 @@ export default function Index() {
     setIsOrderFormOpen(true);
   };
 
-  const totalAmount = cartItems.reduce(
-    (sum, item) => sum + item.price * item.quantity,
-    0
-  ) + Math.round(
-    cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0) * 0.1
-  );
+  const totalAmount =
+    cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0) +
+    Math.round(
+      cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0) *
+        0.1,
+    );
 
   return (
     <div className="min-h-screen bg-white">

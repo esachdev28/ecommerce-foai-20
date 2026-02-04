@@ -24,8 +24,8 @@ export default function HeroSection({ onShopClick }: HeroSectionProps) {
           </p>
 
           <p className="text-base sm:text-lg text-white/80 mb-10 max-w-lg mx-auto">
-            Celebrate your college spirit with our exclusive collection of premium
-            merchandise designed for students.
+            Celebrate your college spirit with our exclusive collection of
+            premium merchandise designed for students.
           </p>
 
           <button
