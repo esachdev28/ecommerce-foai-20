@@ -1,62 +1,131 @@
-import { DemoResponse } from "@shared/api";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { Product } from "@/lib/products";
+import Navbar from "@/components/Navbar";
+import HeroSection from "@/components/HeroSection";
+import ProductGrid from "@/components/ProductGrid";
+import ProductDetails from "@/components/ProductDetails";
+import CartDrawer, { CartItem } from "@/components/CartDrawer";
+import OrderForm from "@/components/OrderForm";
+import Footer from "@/components/Footer";
 
 export default function Index() {
-  const [exampleFromServer, setExampleFromServer] = useState("");
-  // Fetch users on component mount
-  useEffect(() => {
-    fetchDemo();
-  }, []);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
+  const [cartItems, setCartItems] = useState<CartItem[]>([]);
+  const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isOrderFormOpen, setIsOrderFormOpen] = useState(false);
 
-  // Example of how to fetch data from the server (if needed)
-  const fetchDemo = async () => {
-    try {
-      const response = await fetch("/api/demo");
-      const data = (await response.json()) as DemoResponse;
-      setExampleFromServer(data.message);
-    } catch (error) {
-      console.error("Error fetching hello:", error);
+  const handleAddToCart = (product: Product, quantity: number = 1) => {
+    // Default to Medium size and Black color for quick add
+    const newItem: CartItem = {
+      ...product,
+      quantity,
+      size: "M",
+      color: "Black",
+    };
+
+    setCartItems((prev) => {
+      const existing = prev.find(
+        (item) => item.id === product.id && item.size === "M" && item.color === "Black"
+      );
+
+      if (existing) {
+        return prev.map((item) =>
+          item.id === product.id && item.size === "M" && item.color === "Black"
+            ? { ...item, quantity: item.quantity + quantity }
+            : item
+        );
+      }
+
+      return [...prev, newItem];
+    });
+
+    // Show toast-like feedback
+    alert(`${product.name} added to cart!`);
+  };
+
+  const handleUpdateQuantity = (productId: number, quantity: number) => {
+    if (quantity === 0) {
+      handleRemoveItem(productId);
+    } else {
+      setCartItems((prev) =>
+        prev.map((item) =>
+          item.id === productId ? { ...item, quantity } : item
+        )
+      );
     }
   };
 
+  const handleRemoveItem = (productId: number) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== productId));
+  };
+
+  const handleShopNow = () => {
+    const shopSection = document.getElementById("shop");
+    shopSection?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const handleProceedToOrder = () => {
+    setIsCartOpen(false);
+    setIsOrderFormOpen(true);
+  };
+
+  const totalAmount = cartItems.reduce(
+    (sum, item) => sum + item.price * item.quantity,
+    0
+  ) + Math.round(
+    cartItems.reduce((sum, item) => sum + item.price * item.quantity, 0) * 0.1
+  );
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-100 to-slate-200">
-      <div className="text-center">
-        {/* TODO: FUSION_GENERATION_APP_PLACEHOLDER replace everything here with the actual app! */}
-        <h1 className="text-2xl font-semibold text-slate-800 flex items-center justify-center gap-3">
-          <svg
-            className="animate-spin h-8 w-8 text-slate-400"
-            viewBox="0 0 50 50"
-          >
-            <circle
-              className="opacity-30"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-            />
-            <circle
-              className="text-slate-600"
-              cx="25"
-              cy="25"
-              r="20"
-              stroke="currentColor"
-              strokeWidth="5"
-              fill="none"
-              strokeDasharray="100"
-              strokeDashoffset="75"
-            />
-          </svg>
-          Generating your app...
-        </h1>
-        <p className="mt-4 text-slate-600 max-w-md">
-          Watch the chat on the left for updates that might need your attention
-          to finish generating
-        </p>
-        <p className="mt-4 hidden max-w-md">{exampleFromServer}</p>
-      </div>
+    <div className="min-h-screen bg-white">
+      {/* Navbar */}
+      <Navbar
+        cartCount={cartItems.length}
+        onCartClick={() => setIsCartOpen(!isCartOpen)}
+      />
+
+      {/* Hero Section */}
+      <HeroSection onShopClick={handleShopNow} />
+
+      {/* Product Grid */}
+      <ProductGrid
+        onProductClick={setSelectedProduct}
+        onAddToCart={handleAddToCart}
+      />
+
+      {/* Product Details Modal */}
+      {selectedProduct && (
+        <ProductDetails
+          product={selectedProduct}
+          onClose={() => setSelectedProduct(null)}
+          onAddToCart={(product, quantity) => {
+            handleAddToCart(product, quantity);
+            setSelectedProduct(null);
+            setIsCartOpen(true);
+          }}
+        />
+      )}
+
+      {/* Cart Drawer */}
+      <CartDrawer
+        isOpen={isCartOpen}
+        items={cartItems}
+        onClose={() => setIsCartOpen(false)}
+        onUpdateQuantity={handleUpdateQuantity}
+        onRemoveItem={handleRemoveItem}
+        onProceed={handleProceedToOrder}
+      />
+
+      {/* Order Form */}
+      <OrderForm
+        items={cartItems}
+        total={totalAmount}
+        isOpen={isOrderFormOpen}
+        onClose={() => setIsOrderFormOpen(false)}
+      />
+
+      {/* Footer */}
+      <Footer />
     </div>
   );
 }
